@@ -1,22 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
+import routes from './routes';
 import './reset.css';
 import './App.css';
 import Nav from './Components/Nav/Nav';
-import Auth from './Components/Auth/Auth';
-import Dashboard from './Components/Dashboard/Dashboard';
-import Form from './Components/Form/Form';
-import Post from './Components/Post/Post';
 
-
-class App extends React.Component {
+class App extends Component {
   render(){
-    return <div>
-      <Nav/>
-      <Auth/>
-      <Dashboard/>
-      <Form/>
-      <Post/>
-    </div>
+    return (
+        <div className="App">
+          <Nav/>
+          {routes}
+        </div>
+    );
   }
 }
 
