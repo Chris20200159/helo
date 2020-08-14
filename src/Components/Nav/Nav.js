@@ -1,7 +1,15 @@
 import React from 'react';
 
 const Nav = () => {
-  return <div> This is the Nav page</div>
+  return <Nav>
+  <div>
+    <ul>
+      <button onClick="/dashboard">Home</button>
+      <button onClick="/new">New Post</button>
+      <button onClick="/">Logout</button>
+    </ul>
+  </div>
+  </Nav>
 }
 
 export default Nav;
