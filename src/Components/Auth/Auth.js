@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import {loginUser} from '../../redux/reducer';
 
 class Auth extends React.Component {
   constructor(){
@@ -49,5 +51,6 @@ class Auth extends React.Component {
   }
 
 }
+const mapStateToProps = reduxState => reduxState;
 
-export default Auth;
+export default connect(mapStateToProps, {loginUser})(Auth);
