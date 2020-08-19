@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Nav = () => {
+
+const Nav = (props) => {
   return <Nav>
   <div>
     <ul>
@@ -12,4 +14,11 @@ const Nav = () => {
   </Nav>
 }
 
-export default Nav;
+const mapStateToProps = state => {
+  return {
+    username: state.username,
+    img: state.img
+  }
+};
+
+export default connect(mapStateToProps)(Nav);

@@ -13,14 +13,36 @@ class Auth extends React.Component {
     }
   }
 
+  login = () => {
+    const {email, password} = this.state; 
+    axios.post('/auth/login', {email, password}).then(res => {
+      this.props.loginUser(res.data);
+      this.props.history.push('/front_page')
+    }).catch(err => {
+      console.log(err);
+      alert('Login Failed')
+    })
+  }
+  register = () => {
+    const {email, password, firstName, lastName} = this.state;
+    axios.post('/auth/register', {email, password, firstName, lastName}).then(res => {
+        this.props.loginUser(res.data);
+        this.props.history.push('/front_page');
+    }).catch(err => {
+        console.log(err);
+        alert('Registration Failed')
+    })
+  }
+
   render(){
     const {userName, password} = this.state;
     return <div className="login">
       <div className="login-container">
         <h1>Helo</h1>
-          <button>Login</button>
-          <button>Password</button>
-
+          <div className="btn-container">
+          <button onClick={this.login}>Login</button>
+          <button onClick={this.register}>Register</button>
+          </div>
 
       </div>
     </div>
