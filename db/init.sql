@@ -2,8 +2,8 @@ CREATE TABLE users (
   user_id SERIAL PRIMARY KEY, 
   first_name TEXT,
   last_name TEXT, 
-  email VARCHAR(75),
-  password VARCHAR(20),
+  email VARCHAR(200),
+  password VARCHAR(250)
 );
 
 CREATE TABLE posts (
@@ -13,6 +13,12 @@ CREATE TABLE posts (
   user_id INT REFERENCES users(user_id)
 );
 
+CREATE TABLE comments (
+  comment_id SERIAL PRIMARY KEY, 
+  body TEXT,
+  user_id INT REFERENCES users(user_id),
+  post_id INT REFERENCES posts(post_id)
+);
 -- ALTER TABLE users
 -- ALTER COLUMN password VARCHAR(20) TYPE TEXT;
 -- 
@@ -22,11 +28,3 @@ CREATE TABLE posts (
 -- ('Bob', 'Hope', 'Nose4vaudeville@gmail.com', 'UKborn01');
 
 -- SELECT * FROM users;
-
--- 
--- CREATE TABLE comments (
---   comment_id SERIAL PRIMARY KEY, 
---   body TEXT,
---   post_id INT REFERENCES posts(post_id),
---   user_id INT REFERENCES users(user_id)
--- );
