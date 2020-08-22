@@ -12,7 +12,7 @@ const app = express();
 //# top level middleware
 app.use(express.json())
 
-//# this lsets us use session in our req object
+//# this lets us use session in our req object
 app.use(
   session({
     resave: false,
