@@ -2,31 +2,37 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
-const app = express();
 const ctrl = require('./controller');
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
 
+const app = express();
+
+//# top level middleware
 app.use(express.json())
 
-app.use(session({
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 * 24},
-  secret: SESSION_SECRET  
-}))
+//# this lsets us use session in our req object
+app.use(
+  session({
+    resave: false,
+    saveUninitialized: true,
+    secret: SESSION_SECRET,  
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+ })
+);
 
+//#database connection setup
 massive({
   connectionString: CONNECTION_STRING,
   ssl: {
     rejectUnauthorized: false
-  }
+  },
 }).then( db => {
   app.set('db', db)
-  console.log('connected to db')
-}).catch( err => console.log(err))
+  console.log('Database Online');
+}).catch( err => console.log(`Database error: ${err}`));
 
 
-// endpoints
+//# Auth endpoints
 app.post('/auth/login', ctrl.login)
 app.post('/auth/register', ctrl.register)
 
