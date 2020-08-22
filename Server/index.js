@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
-const ctrl = require('./controller');
+const authCtrl = require('./AuthController');
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
 
 const app = express();
@@ -33,7 +33,9 @@ massive({
 
 
 //# Auth endpoints
-app.post('/auth/login', ctrl.login)
-app.post('/auth/register', ctrl.register)
+app.post('/auth/login', authCtrl.login);
+app.post('/auth/register', authCtrl.register);
+app.post('/auth/logout', authCtrl.logout);
+app.get('/auth/user', authCtrl.getUser);
 
 app.listen(SERVER_PORT, ()=> console.log(`Connected to port ${SERVER_PORT}`))

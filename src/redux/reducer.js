@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 const initialState = {
-  username: '',
-  id: '',
-  img: ''
+  user: { userName: "", userId: 0, img: ''},
 };
 
 const LOGIN_USER = 'LOGIN_USER';

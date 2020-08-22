@@ -27,7 +27,7 @@ module.exports = {
     const {firstName, lastName, email, password} = req.body;
     const existingUser = await db.check_user(email);
     if(existingUser[0]){
-      return res.status(409).send('Username already taken')
+      return res.status(409).send('Username already exists')
     }
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt)
@@ -40,4 +40,15 @@ module.exports = {
     }
     res.status(200).send(req.session.user)
   },
-}
+  logout: (req, res) => {
+    req.session.destroy();
+    res.sendStatus(200)''
+  },
+  getUser: (req, res) => {
+    if (req.session.user) {
+      res.status(200).send(req.session.user);
+    } else {
+      res.sendStatus(404);
+    }
+  },
+};
