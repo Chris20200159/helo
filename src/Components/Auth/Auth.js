@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { loginUser } from '../../redux/reducer';
+import { saveUser } from '../../redux/reducer';
 
 class Auth extends React.Component {
   constructor(){
@@ -18,7 +18,7 @@ class Auth extends React.Component {
   login = () => {
     const {email, password} = this.state; 
     axios.post('/auth/login', {email, password}).then(res => {
-      this.props.loginUser(res.data);
+      this.props.saveUser(res.data);
       this.props.history.push('/front_page')
     }).catch(err => {
       console.log(err);
@@ -27,8 +27,8 @@ class Auth extends React.Component {
   }
   register = () => {
     const {email, password, firstName, lastName} = this.state;
-    axios.post('/auth/register', {email, password, firstName, lastName}).then(res => {
-        this.props.loginUser(res.data);
+    axios.post('/auth/register', {email, password}).then(res => {
+        this.props.saveUser(res.data);
         this.props.history.push('/front_page');
     }).catch(err => {
         console.log(err);
@@ -36,11 +36,31 @@ class Auth extends React.Component {
     })
   }
 
+  handleEmailInput = (e) => {
+    this.setState({email: e.target.value})
+  }
+
+  handlePasswordInput = (e) => {
+    this.setState({password: e.target.value})
+  }
+
   render(){
-    const {userName, password} = this.state;
+    const {email, password} = this.state;
     return <div className="login">
       <div className="login-container">
         <h1>Helo</h1>
+        <input 
+        name="email"
+        placeholder="email"
+        value={email}
+        onChange={this.handleEmailInput}
+        />
+        <input
+        name="password"
+        placeholder="password"
+        value={password}
+        onChange={this.handlePasswordInput}
+        />
           <div className="btn-container">
           <button onClick={this.login}>Login</button>
           <button onClick={this.register}>Register</button>
@@ -53,4 +73,4 @@ class Auth extends React.Component {
 }
 const mapStateToProps = reduxState => reduxState;
 
-export default connect(mapStateToProps, { loginUser })(Auth);
+export default connect(mapStateToProps, {saveUser })(Auth);
